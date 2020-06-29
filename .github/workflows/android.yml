@@ -1,0 +1,23 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    container: thyrlian/android-sdk
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: gradlew
+      run: ./gradlew build
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: apk_package
+        path: app/build/outputs/apk/release/*.apk
