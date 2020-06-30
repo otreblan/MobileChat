@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.Intent;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -29,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void goToContactsActivity(String username, int id) {
+        Intent intent = new Intent(this, ContactsActivity.class);
+        intent.putExtra("id", id);
+        intent.putExtra("username", username);
+        startActivity(intent);
     }
 
     public void onLoginClicked(View view) {
@@ -54,8 +63,20 @@ public class MainActivity extends AppCompatActivity {
                 jsonMessage,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject reponse) {
-                        showMessage("Ok");
+                    public void onResponse(JSONObject response) {
+                        //showMessage("Ok");
+                        showMessage(response.toString());
+
+                        String username = null;
+                        try {
+                            username = response.getString("username");
+                            int id = response.getInt("id");
+
+                            // Opening ContactsActivity
+                            goToContactsActivity(username, id);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
