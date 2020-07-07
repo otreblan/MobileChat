@@ -1,6 +1,8 @@
 package com.example.mobilechat;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +20,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
     public JSONArray users;
     private Context context;
+    private int userFromId;
 
-    public ContactsAdapter(JSONArray users, Context context) {
+    public ContactsAdapter(JSONArray users, Context context, int userFromId) {
         this.users = users;
         this.context = context;
+        this.userFromId = userFromId;
     }
 
     @NonNull
@@ -34,12 +38,22 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
-            JSONObject user = users.getJSONObject(position);
+            final JSONObject user = users.getJSONObject(position);
             String name = user.getString("name") + " " + user.getString("fullname");
-            String username = user.getString("username");
+            final String username = user.getString("username");
 
             holder.first_line.setText(name);
             holder.second_line.setText(username);
+            holder.container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        goToChatActivity(userFromId, user.getInt("id"), username);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -63,5 +77,18 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
             container = itemView.findViewById(R.id.element_container);
         }
+    }
+
+    public void goToChatActivity(int userFromId, int userToId, String username) {
+        Intent intent = new Intent(this.context, ChatActivity.class);
+
+        // Int
+        intent.putExtra("userFromId", userFromId);
+        intent.putExtra("userToId", userToId);
+
+        // String
+        intent.putExtra("username", username);
+
+        this.context.startActivity(intent);
     }
 }

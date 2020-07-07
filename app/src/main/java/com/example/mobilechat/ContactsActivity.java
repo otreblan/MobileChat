@@ -24,13 +24,14 @@ public class ContactsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
 
+    public int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
 
-        int id = getIntent().getExtras().getInt("id");
+        this.id = getIntent().getExtras().getInt("id");
         String username = getIntent().getExtras().getString("username");
 
         setTitle(username);
@@ -57,7 +58,7 @@ public class ContactsActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        adapter = new ContactsAdapter(response, getActivity());
+                        adapter = new ContactsAdapter(response, getActivity(), id);
                         recyclerView.setAdapter(adapter);
 
                     }
