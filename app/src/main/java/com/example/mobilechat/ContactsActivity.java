@@ -36,7 +36,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         setTitle(username);
 
-        recyclerView = findViewById(R.id.main_recicler_view);
+        recyclerView = findViewById(R.id.main_recycler_view);
     }
 
     @Override

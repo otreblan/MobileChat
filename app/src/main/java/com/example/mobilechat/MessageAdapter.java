@@ -1,11 +1,13 @@
 package com.example.mobilechat;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +19,12 @@ import org.json.JSONObject;
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
     public JSONArray messages;
     public Context context;
-    public int logedUserId;
+    public int loggedUserId;
 
-    public MessageAdapter(JSONArray messages, Context context, int logedUserId) {
+    public MessageAdapter(JSONArray messages, Context context, int loggedUserId) {
         this.messages = messages;
         this.context = context;
-        this.logedUserId = logedUserId;
+        this.loggedUserId = loggedUserId;
     }
 
     @NonNull
@@ -37,8 +39,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         try {
             final JSONObject message = messages.getJSONObject(position);
             String content = message.getString("content");
-
-            holder.myLine.setText(content);
+            int whoSent = message.getInt("user_from_id");
+            if(whoSent == loggedUserId) {
+                holder.myLine.setText(content);
+            } else {
+                holder.friendLine.setText(content);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
