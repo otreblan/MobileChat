@@ -4,35 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CS2B01 _CHAT"
-            android:textAlignment="center"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Alberto"
-            android:textAlignment="center"
-            tools:ignore="HardcodedText" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,7 +26,7 @@
                 tools:ignore="HardcodedText" />
 
             <EditText
-                android:id="@+id/username"
+                android:id="@+id/r_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -57,9 +40,60 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center_horizontal"
-            >
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Name"
+                android:textAlignment="textEnd"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/r_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textAlignment="textStart"
+                tools:ignore="LabelFor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Full name"
+                android:textAlignment="textEnd"
+                tools:ignore="HardcodedText" />
+
+            <EditText
+                android:id="@+id/r_fullname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:textAlignment="textStart"
+                tools:ignore="LabelFor" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,28 +104,19 @@
                 tools:ignore="HardcodedText" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/r_password"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPassword"
                 android:importantForAutofill="no"
+                android:inputType="textPassword"
                 tools:ignore="LabelFor" />
 
         </LinearLayout>
 
         <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:onClick="onLoginClicked"
-            android:text="Login"
-            tools:ignore="HardcodedText" />
-
-        <Button
-            android:id="@+id/register"
+            android:id="@+id/register2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -100,5 +125,4 @@
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

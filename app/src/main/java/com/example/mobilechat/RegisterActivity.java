@@ -2,11 +2,11 @@ package com.example.mobilechat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
-import android.content.Intent;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,78 +21,62 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_register);
     }
 
-    public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    public RegisterActivity getThis() {
+        return this;
     }
 
-    public void goToContactsActivity(String username, int id) {
-        Intent intent = new Intent(this, ContactsActivity.class);
-        intent.putExtra("id", id);
-        intent.putExtra("username", username);
-        startActivity(intent);
-    }
+    public void onRegisterClicked(View view) {
+        //Intent intent = new Intent(this, RegisterActivity.class);
+        //startActivity(intent);
 
-    public void onLoginClicked(View view) {
-        EditText username = (EditText)findViewById(R.id.username);
-        EditText password = (EditText)findViewById(R.id.password);
+        EditText username = (EditText)findViewById(R.id.r_username);
+        EditText name = (EditText)findViewById(R.id.r_name);
+        EditText fullname = (EditText)findViewById(R.id.r_fullname);
+        EditText password = (EditText)findViewById(R.id.r_password);
 
         String username_str = username.getText().toString();
+        String name_str = name.getText().toString();
+        String fullname_str = fullname.getText().toString();
         String password_str = password.getText().toString();
 
         Map<String, String> message = new HashMap<String, String>();
 
         message.put("username", username_str);
+        message.put("name", name_str);
+        message.put("fullname", fullname_str);
         message.put("password", password_str);
 
         JSONObject jsonMessage = new JSONObject(message);
 
-        //showMessage(jsonMessage.toString());
-
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 // 10.0.2.2
-                "https://otreblan.ddns.net/authenticate",
+                "https://otreblan.ddns.net/users",
                 jsonMessage,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         //showMessage("Ok");
-                        showMessage(response.toString());
-
-                        String username = null;
-                        try {
-                            username = response.getString("username");
-                            int id = response.getInt("id");
-
-                            // Opening ContactsActivity
-                            goToContactsActivity(username, id);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        getThis().finish();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        showMessage("No");
+                        Log.e("RegisterActivity","No");
                     }
                 }
         );
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
-    }
-
-    public void onRegisterClicked(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
     }
 }
