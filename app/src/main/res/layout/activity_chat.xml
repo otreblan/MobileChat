@@ -9,6 +9,37 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+        <EditText
+            android:id="@+id/send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor" />
+
+        <Button
+            android:id="@+id/send_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickSend"
+            android:text="Send"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
