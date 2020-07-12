@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -32,10 +33,12 @@ public class ChatActivity extends AppCompatActivity {
     private int userToId;
 
     private String username;
+    private Handler handler;
 
     // Reference to the chat container
     public RecyclerView mRecyclerView;
     public RecyclerView.Adapter mAdapter;
+    public RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,10 @@ public class ChatActivity extends AppCompatActivity {
         this.userToId = getIntent().getExtras().getInt("userToId");
 
         this.username = getIntent().getExtras().getString("username");
+
+        this.handler = new Handler();
         this.mRecyclerView = findViewById(R.id.messages_recycler_view);
+        queue = Volley.newRequestQueue(this);
 
         setTitle(this.username);
 
@@ -90,7 +96,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
         );
 
-        RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
 
@@ -134,7 +139,6 @@ public class ChatActivity extends AppCompatActivity {
                 }
         );
 
-        RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
 }
