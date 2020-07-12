@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -49,6 +51,10 @@ public class ChatActivity extends AppCompatActivity {
         getMessages();
     }
 
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
     public Activity getActivity() {
         return this;
     }
@@ -58,15 +64,14 @@ public class ChatActivity extends AppCompatActivity {
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
-                //url + userFromId + "/" + userToId,
-                url + userToId,
+                url + userFromId + "/" + userToId,
                 new JSONArray(),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         mAdapter = new MessageAdapter(response, getActivity(), userFromId);
                         mRecyclerView.setAdapter(mAdapter);
-
+                        Log.e("ChatActivity",response.toString());
                     }
                 },
                 new Response.ErrorListener() {

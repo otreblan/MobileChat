@@ -74,5 +74,4 @@ public class ContactsActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
-
 }

@@ -30,13 +30,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.message_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_view, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
+            Log.e("MessageAdapter", ""+position);
             final JSONObject message = messages.getJSONObject(position);
             String content = message.getString("content");
             int whoSent = message.getInt("user_from_id");

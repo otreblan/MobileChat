@@ -2,6 +2,7 @@ package com.example.mobilechat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
+            Log.e("ContactsAdapter", ""+position);
             final JSONObject user = users.getJSONObject(position);
             String name = user.getString("name") + " " + user.getString("fullname");
             final String username = user.getString("username");
