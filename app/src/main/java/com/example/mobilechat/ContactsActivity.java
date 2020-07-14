@@ -53,7 +53,7 @@ public class ContactsActivity extends AppCompatActivity {
     public void getUsers() {
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
-                "https://otreblan.ddns.net/users",
+                "https://baroque-bastille-54781.herokuapp.com/users",
                 new JSONArray(),
                 new Response.Listener<JSONArray>() {
                     @Override

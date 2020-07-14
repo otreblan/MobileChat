@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 // 10.0.2.2
-                "https://otreblan.ddns.net/authenticate",
+                "https://baroque-bastille-54781.herokuapp.com/authenticate",
                 jsonMessage,
                 new Response.Listener<JSONObject>() {
                     @Override

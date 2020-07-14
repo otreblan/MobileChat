@@ -57,7 +57,7 @@ public class ChatActivity extends AppCompatActivity {
         this.username = getIntent().getExtras().getString("username");
 
         try {
-            this.socket = IO.socket("https://otreblan.ddns.net/messages");
+            this.socket = IO.socket("https://baroque-bastille-54781.herokuapp.com/messages");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -128,7 +128,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void getMessages() {
-        String url = "https://otreblan.ddns.net/messages/";
+        String url = "https://baroque-bastille-54781.herokuapp.com/messages/";
 
         JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
@@ -176,7 +176,7 @@ public class ChatActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 // 10.0.2.2
-                "https://otreblan.ddns.net/messages",
+                "https://baroque-bastille-54781.herokuapp.com/messages",
                 jsonMessage,
                 new Response.Listener<JSONObject>() {
                     @Override

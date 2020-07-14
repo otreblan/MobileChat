@@ -59,7 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 // 10.0.2.2
-                "https://otreblan.ddns.net/users",
+                "https://baroque-bastille-54781.herokuapp.com/users",
                 jsonMessage,
                 new Response.Listener<JSONObject>() {
                     @Override
