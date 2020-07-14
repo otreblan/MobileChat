@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -19,11 +18,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +36,10 @@ public class ChatActivity extends AppCompatActivity {
     private int userToId;
 
     private String username;
-    private Handler handler;
+    public Socket socket;
+    public Emitter.Listener onInfo;
+    public Emitter.Listener onNewMessage;
+    public JSONObject idJSON;
 
     // Reference to the chat container
     public RecyclerView mRecyclerView;
@@ -50,7 +56,44 @@ public class ChatActivity extends AppCompatActivity {
 
         this.username = getIntent().getExtras().getString("username");
 
-        this.handler = new Handler();
+        try {
+            this.socket = IO.socket("https://otreblan.ddns.net/messages");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        this.idJSON = new JSONObject();
+        try {
+            idJSON.put("fromId", userFromId);
+            idJSON.put("toId", userToId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        this.onInfo = new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        socket.emit("listen", idJSON);
+                    }
+                });
+            }
+        };
+
+        this.onNewMessage = new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("ChatActivity", "New messages");
+                        getMessages();
+                    }
+                });
+            }
+        };
         this.mRecyclerView = findViewById(R.id.messages_recycler_view);
         queue = Volley.newRequestQueue(this);
 
@@ -63,6 +106,17 @@ public class ChatActivity extends AppCompatActivity {
         super.onResume();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         getMessages();
+
+        socket.on("info", onInfo);
+        socket.on("newMessage", onNewMessage);
+        socket.connect();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        socket.emit("ignore", idJSON);
+        socket.disconnect();
     }
 
     public void showMessage(String message) {
